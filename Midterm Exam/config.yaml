@@ -1,0 +1,36 @@
+---
+
+ - hosts: all
+   become: yes
+   tasks: 
+ 
+   - name: Install
+     apt:
+       name: apt-transport-https
+       state: present
+       update_cache: yes
+     when: ansible_distribution is defined and ansible_distribution == "Ubuntu"
+
+   - name: add elasticsearch GPG key        
+     apt_key:
+       url: https://artifacts.elastic.co/GPG-KEY-elasticsearch
+       state: present
+     when: ansible_distribution is defined and ansible_distribution == "Ubuntu"
+
+   - name: add elastic search repository
+     apt_repository:
+       repo: "deb https://artifacts.elastic.co/packages/8.x/apt stable main"
+       state: present
+     when: ansible_distribution is defined and ansible_distribution == "Ubuntu"
+
+
+   - name: install elasticsearch
+     package:
+      name: elasticsearch
+      state: present
+
+   - name: start elasticsearch
+     service:
+       name: elasticsearch
+       state: started
+

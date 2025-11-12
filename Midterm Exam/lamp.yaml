@@ -1,0 +1,10 @@
+---
+ - hosts: centos_server
+   become: yes
+   tasks:
+
+   - name: install httpd
+     dnf: 
+       name: httpd
+       state: latest
+     when: ansible_distribution is defined and ansible_distribution == "CentOS"

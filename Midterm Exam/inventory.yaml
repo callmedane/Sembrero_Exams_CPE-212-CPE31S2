@@ -1,0 +1,9 @@
+[ubuntu_server]
+192.168.56.109 ansible_user=vboxuser ansible_ssh_private_key_file=/home/vboxuser/.ssh/id_rsa
+
+[centos_server]
+192.168.56.112 ansible_user=sembrero ansible_ssh_private_key_file=/home/vboxuser/.ssh/id_rsa
+
+[workstation]
+192.168.56.111 ansible_user=vboxuser ansible_ssh_private_key_file=/home/vboxuser/.ssh/id_rsa
+

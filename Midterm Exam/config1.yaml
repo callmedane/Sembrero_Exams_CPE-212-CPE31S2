@@ -1,0 +1,23 @@
+---
+
+ - hosts: all
+   become: yes
+   tasks: 
+  
+   - name: install kibana
+     apt: 
+       name: kibana
+       state: present
+     when: ansible_distribution is defined and ansible_distribution == "Ubuntu"
+
+   - name: start and enable kibana
+     service:
+      name: kibana
+      enabled: yes
+      state: started
+     when: ansible_distribution is defined and ansible_distribution == "Ubuntu"
+
+   - name: add kibana repo key
+     apt_key: 
+      url: https://artifacts.elastic.co/GPG-KEY-elasticsearch
+      state: present

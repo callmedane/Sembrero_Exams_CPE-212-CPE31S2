@@ -1,0 +1,29 @@
+--- 
+ 
+ - hosts: ubuntu_server
+   become: yes
+   tasks: 
+
+   - name: add elasticsearch GPG key
+     apt_key:
+       url: https://artifacts.elastic.co/GPG-KEY-elasticsearch
+       state: present
+     when: ansible_distribution is defined and ansible_distribution == "Ubuntu"
+
+   - name: add elastic search repository
+     apt_repository:
+       repo: "deb https://artifacts.elastic.co/packages/8.x/apt stable main"
+       state: present
+     when: ansible_distribution is defined and ansible_distribution == "Ubuntu"
+
+   - name: install logstash
+     apt: 
+       name: logstash
+       state: present
+     when: ansible_distribution is defined and ansible_distribution == "Ubuntu"
+
+   - name: start and enable logstash
+     systemd: 
+      name: logstash
+      enabled: yes
+      state: started
